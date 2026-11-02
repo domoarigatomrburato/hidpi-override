@@ -28,12 +28,13 @@ do.
   internal displays, vendor 0x610, are skipped).
 - `install` picks the display automatically when exactly one external display
   is connected, otherwise pass `--display N` from `list`. The default
-  resolutions suit a 3440x1440 panel: `3440x1440 3096x1296 2752x1152
-  2580x1080 2560x1072 2520x1055 2480x1038 2440x1021 2400x1005 2365x990`.
-  macOS drops the ones the connection cannot drive (see Limits), so the list
-  covers both HDMI and USB-C. Use `--res` for other panels. `--dry-run` prints the target path
-  and the plist and does nothing else (no `sudo`). An existing override file is
-  kept unless you pass `--force`.
+  resolutions suit a 3440x1440 panel: `3440x1440 3096x1296 3062x1282
+  2752x1152 2580x1080 2560x1072 2520x1055 2480x1038 2440x1021 2400x1005
+  2365x990`. macOS drops the ones the Mac or the connection cannot drive (see
+  Limits), so the list covers both HDMI and USB-C on an M2 Pro and an M3.
+  Use `--res` for other panels. `--dry-run` prints the target path and the
+  plist and does nothing else (no `sudo`). An existing override file is kept
+  unless you pass `--force`.
 - `uninstall` moves that display's override file to `~/.Trash/` with a
   timestamped name and removes the vendor folder only if it is then empty.
   Nothing is deleted.
@@ -54,15 +55,17 @@ On Apple Silicon, macOS may still refuse modes above the GPU or display limits
 override only adds candidates; a mode that does not show up in System Settings
 after replugging was rejected by macOS.
 
-The limit depends on the connection. Tested on a Mac mini M2 Pro with macOS
-15.7 and a Huawei 3440x1440 monitor:
+The limit depends on the Mac and the connection. Tested with the same Huawei
+3440x1440 monitor:
 
-| Connection | Monitor reports | Largest HiDPI accepted | Rejected |
-| --- | --- | --- | --- |
-| HDMI | native 1920x1080, 100 Hz | 2560x1072 (backing 5120x2144) | 2580x1080 and above |
-| USB-C | native 3440x1440, 165 Hz | 3096x1296 (backing 6192x2592) | 3440x1440 (backing 6880x2880) |
+| Mac | Connection | Monitor reports | Largest HiDPI accepted | Rejected |
+| --- | --- | --- | --- | --- |
+| Mac mini M2 Pro, macOS 15.7 | HDMI | native 1920x1080, 100 Hz | 2560x1072 (backing 5120x2144) | 2580x1080 and above |
+| Mac mini M2 Pro, macOS 15.7 | USB-C | native 3440x1440, 165 Hz | 3096x1296 (backing 6192x2592) | 3440x1440 (backing 6880x2880) |
+| MacBook Air M3, macOS 27.0 | USB-C | native 3440x1440, 165 Hz | 3062x1282 (backing 6124x2564), up to 144 Hz | 3096x1296 (backing 6192x2592) |
 
-Prefer USB-C or DisplayPort when the monitor has it.
+3062x1282 is in the default list for the M3. Prefer USB-C or DisplayPort
+when the monitor has it.
 
 ## Tests
 

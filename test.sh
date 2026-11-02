@@ -85,7 +85,7 @@ expect_has "dry-run: product id" "$out" '"DisplayProductID" => 27173'
 expect_has "dry-run: target path" "$out" 'Target:  /Library/Displays/Contents/Resources/Overrides/DisplayVendorID-22f6/DisplayProductID-6a25'
 
 default_out=$(run "$work/one.txt" install --dry-run)
-expect_eq "dry-run: default resolutions give 20 entries" "20" "$(grep -c 'bytes = 0x' <<<"$default_out" || true)"
+expect_eq "dry-run: default resolutions give 22 entries" "22" "$(grep -c 'bytes = 0x' <<<"$default_out" || true)"
 two_out=$(run "$work/one.txt" install --dry-run --res "3440x1440 2752x1152")
 expect_eq "dry-run: two resolutions give 4 entries" "4" "$(grep -c 'bytes = 0x' <<<"$two_out" || true)"
 expect_eq "dry-run: --display 1 accepted" "0" "$(run "$work/one.txt" install --dry-run --display 1 --res 3440x1440 >/dev/null 2>&1; echo $?)"

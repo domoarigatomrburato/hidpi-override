@@ -4,7 +4,7 @@
 set -euo pipefail
 
 OVERRIDES_DIR="/Library/Displays/Contents/Resources/Overrides"
-DEFAULT_RES="3440x1440 3096x1296 2752x1152 2580x1080 2560x1072 2520x1055 2480x1038 2440x1021 2400x1005 2365x990"
+DEFAULT_RES="3440x1440 3096x1296 3062x1282 2752x1152 2580x1080 2560x1072 2520x1055 2480x1038 2440x1021 2400x1005 2365x990"
 APPLE_VENDOR=1552 # 0x610, Apple internal displays
 
 usage() {
@@ -18,8 +18,9 @@ list       Print external displays as: index  vid:pid (hex)  name
 install    Write the override plist for one display (needs sudo unless --dry-run).
              --display N   display index from "list" (optional with one display)
              --res "..."   looks-like resolutions, default:
-                           3440x1440 3096x1296 2752x1152 2580x1080 2560x1072
-                           2520x1055 2480x1038 2440x1021 2400x1005 2365x990
+                           3440x1440 3096x1296 3062x1282 2752x1152 2580x1080
+                           2560x1072 2520x1055 2480x1038 2440x1021 2400x1005
+                           2365x990
              --dry-run     print the target path and plist, change nothing
              --force       overwrite an existing override file
 uninstall  Move that display's override file to ~/.Trash (needs sudo).
